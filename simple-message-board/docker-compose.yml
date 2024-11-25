@@ -1,0 +1,11 @@
+# version: '2.4'
+# versions no longer needed for compose CLI use (as of 2020)
+# If using swarm, you'll still need version 3.9
+
+services:
+  web:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"

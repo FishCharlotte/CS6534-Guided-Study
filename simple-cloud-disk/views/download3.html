@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remote File Download3</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .form-container {
+            margin-top: 30px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        input[type="url"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Remote File Download2</h2>
+        <form action="http://localhost:8081/api/download-remote4" method="GET">
+            <div class="input-group">
+                <label for="url">Enter URL to download:</label>
+                <input type="url" id="url" name="url" required 
+                       placeholder="https://example.com/file.pdf">
+            </div>
+            <button type="submit">Download File</button>
+        </form>
+    </div>
+</body>
+</html> 

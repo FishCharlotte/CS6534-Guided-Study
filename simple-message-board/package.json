@@ -1,0 +1,18 @@
+{
+  "name": "message-board",
+  "version": "1.0.0",
+  "description": "A simple message board with SQL.js",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "@koa/router": "^12.0.0",
+    "koa": "^2.14.2", 
+    "koa-bodyparser": "^4.4.1",
+    "koa-views": "^8.1.0",
+    "sql.js": "^1.12.0",
+    "ejs": "^3.1.9",
+    "sanitize-html": "^2.13.0"
+  }
+} 

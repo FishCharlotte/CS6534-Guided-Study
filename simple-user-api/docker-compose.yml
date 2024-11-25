@@ -1,0 +1,37 @@
+# version: '2.4'
+# versions no longer needed for compose CLI use (as of 2020)
+# If using swarm, you'll still need version 3.9
+
+services:
+  web:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: 123456
+    ports:
+      - "8080:8080"
+
+  mysql:
+    image: "mysql:8.0.39"
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      TZ: Asia/Shanghai
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/config/my.cnf:/etc/mysql/my.cnf
+    healthcheck:
+      test: ["CMD-SHELL", "curl --silent localhost:3306 >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 3

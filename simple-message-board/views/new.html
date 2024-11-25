@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>New Message Board</title>
+  <style>
+    .message {
+      border: 1px solid #ddd;
+      margin: 10px 0;
+      padding: 10px;
+    }
+    .pagination {
+      margin: 20px 0;
+    }
+    .pagination button {
+      margin: 0 5px;
+    }
+    .form-group {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>New Message Board</h1>
+  
+  <!-- Messages List -->
+  <div id="messages"></div>
+  
+  <!-- Pagination -->
+  <div class="pagination" id="pagination"></div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    let currentPage = 1;
+
+    function loadMessages(page = 1) {
+      $.get(`/api/messages?page=${page}`, function(data) {
+        // Clear messages container
+        const messagesContainer = $('#messages');
+        messagesContainer.empty();
+        
+        // Create and append each message
+        data.messages.forEach(msg => {
+          const messageDiv = $('<div>').addClass('message');
+          const authorStrong = $('<strong>');
+          const contentP = $('<p>');
+          const timeSmall = $('<small>');
+          
+          // Set text content safely
+          authorStrong.text(msg.author);
+          contentP.text(msg.content);
+          timeSmall.text('Posted at: ' + new Date(msg.created_at).toLocaleString());
+          
+          // Append elements
+          messageDiv.append(authorStrong);
+          messageDiv.append(contentP);
+          messageDiv.append(timeSmall);
+          
+          messagesContainer.append(messageDiv);
+        });
+        
+        // Clear pagination container
+        const paginationDiv = $('#pagination');
+        paginationDiv.empty();
+        
+        // Create and append pagination buttons
+        for(let i = 1; i <= data.pagination.total; i++) {
+          const button = $('<button>')
+            .text(i)
+            .prop('disabled', i === data.pagination.current)
+            .click(() => loadMessages(i));
+          
+          paginationDiv.append(button);
+        }
+        
+        currentPage = page;
+      });
+    }
+
+    // Initial load
+    $(document).ready(function() {
+      loadMessages();
+    });
+  </script>
+</body>
+</html> 

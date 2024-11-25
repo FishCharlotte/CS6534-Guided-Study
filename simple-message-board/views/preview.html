@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Message Preview</title>
+  <style>
+    .preview-message {
+      border: 1px solid #ddd;
+      margin: 20px;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Message Preview</h1>
+  <div class="preview-message">
+    <strong>Author: <%= author %></strong>
+    <p>Message: <%- content %></p>
+    <small>Preview generated at: <%= new Date(preview_time).toLocaleString() %></small>
+  </div>
+</body>
+</html> 

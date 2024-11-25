@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <title>Driver</title>
+    </head>
+    <body>
+        <div>
+            <h1 id="title"></h1>
+            <ul id="files"></ul>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <script>$(document).ready(function () {
+            $.ajax({
+                url: '/api/users/' + localStorage.getItem('username'),
+                headers: { "X-Token": localStorage.getItem('token') },
+                success: function (data) {
+                    $('#title').text(data.info['username']);
+                },
+                error: function(xhr) {
+                    window.location = '/login.html';
+                },
+            });
+                
+            $.ajax({
+                url: '/api/files',
+                headers: { "X-Token": localStorage.getItem('token') },
+                success: function (data) {
+                    $('#files').html('');
+                    data.files.forEach(element => {
+                        const link = $('<a target="_blank"></a>');
+
+                        // CWE-359: Exposure of Private Personal Information to an Unauthorized Actor
+                        // https://cwe.mitre.org/data/definitions/359.html
+                        link.attr('href', '/api/files/' + data.username + '/' + element);
+                        link.text(element);
+
+                        const item = $('<li></li>');
+                        item.append(link);
+
+                        $('#files').append(item);
+                    });
+                },
+                error: function(xhr) {
+                    $('#files').html('Error!');
+                },
+            });
+                
+        });</script>
+    </body>
+</html>

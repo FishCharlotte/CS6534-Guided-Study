@@ -1,0 +1,25 @@
+# version: '2.4'
+# versions no longer needed for compose CLI use (as of 2020)
+# If using swarm, you'll still need version 3.9
+
+services:
+  web:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+      JWT_KEY: 123456  # Weak JWT Key for HMAC-SHA256
+      JWT_EXP: 3600  # 1 hour available
+    expose:
+      - "8080"
+  nginx:
+    image: "nginx:1.27.2-alpine3.20"
+    depends_on:
+      - web
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./data/attachments:/var/www/attachments
+      - ./views:/var/www/views
+    ports:
+      - "8081:8081"
+      - "8082:8082"
